@@ -3,7 +3,31 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import BranchMapView from "@/components/shared/BranchMapView";
+import OrderForm from "@/components/shared/OrderForm";
+import Footer from "@/components/shared/Footer";
 
+const sampleBranches = [
+  {
+    id: 1,
+    name: "Dhanmondi Branch",
+    address: "House 42, Road 11, Dhanmondi",
+    lat: 23.746465,
+    lng: 90.376015,
+    phone: "+8801712345678",
+    hours: "9am - 9pm",
+  },
+  {
+    id: 2,
+    name: "Gulshan Branch",
+    address: "House 12, Gulshan 2",
+    lat: 23.7925,
+    lng: 90.4075,
+    phone: "+8801711111111",
+    hours: "8am - 8pm",
+  },
+  // add more...
+];
 export default function Home() {
   const shirts = ["/shirt.png", "/shirt2.png", "/shirt3.png"]; // add your images
   const [current, setCurrent] = useState(0);
@@ -21,7 +45,7 @@ export default function Home() {
       {/* NAVBAR */}
       <nav className="flex items-center justify-between px-10 py-6">
         <div className="text-xl font-semibold flex items-center gap-2">
-          <span>CleanPro</span>
+          <span>E-Londri</span>
           <span className="text-2xl">🌀</span>
         </div>
 
@@ -120,6 +144,17 @@ export default function Home() {
           Reserve Service →
         </Button>
       </div>
+      <div className=" p-4">
+        {" "}
+        <BranchMapView
+          branches={sampleBranches}
+          initialCenter={[23.8103, 90.4125]}
+        />
+      </div>
+
+      <OrderForm branches={sampleBranches} selectedBranchId={1} />
+
+      <Footer />
     </main>
   );
 }
