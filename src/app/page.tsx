@@ -70,16 +70,16 @@ export default function Home() {
 
         {/* Center Shirt Image */}
         <div className="flex-1 relative">
-        <div className="transition-all duration-700 ease-in-out">
-    <Image
-      key={current} // Smooth fade animation
-      src={shirts[current]}
-      alt="clean shirt"
-      width={550}
-      height={550}
-      className="drop-shadow-lg rounded-xl animate-fade"
-    />
-  </div>
+          <div className="transition-all duration-700 ease-in-out">
+            <Image
+              key={current} // Smooth fade animation
+              src={shirts[current]}
+              alt="clean shirt"
+              width={550}
+              height={550}
+              className="drop-shadow-lg rounded-xl animate-fade"
+            />
+          </div>
 
           <p className="absolute -left-6 top-10 text-sm font-medium text-gray-700 bg-white/60 px-3 py-2 rounded-lg shadow">
             Tough stains? We’ll make your clothes flawless! ✨
