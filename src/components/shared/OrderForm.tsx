@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 /* ---------------------- Branch Type ---------------------- */
 export type Branch = {
@@ -86,7 +87,9 @@ export default function OrderForm({ selectedBranchId }: OrderFormProps) {
             Place your order quickly and easily. Choose your service, branch,
             and schedule your pickup.
           </p>
-          <img
+          <Image
+            height={1000}
+            width={1000}
             src="/laundry-illustration.png"
             alt="Laundry Illustration"
             className="w-3/4"
