@@ -116,7 +116,7 @@ export default function Home() {
         </div>
 
         {/* Right Card */}
-        <div className="flex-1">
+        <div className="">
           <div className="w-64 h-64 bg-white/50 backdrop-blur-md rounded-2xl shadow p-6 flex flex-col items-center justify-center">
             <Image
               src="/stacked-clothes.png"
