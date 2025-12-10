@@ -6,6 +6,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L, { LatLngTuple, Map as LeafletMap } from "leaflet";
 import { Button } from "@/components/ui/button";
+import { MyLocationAndRoute } from "./MyLocationAndRoute";
 
 /* ---------------------- Fix Marker Icons (No ANY used) ---------------------- */
 L.Icon.Default.mergeOptions({
@@ -28,6 +29,14 @@ export type Branch = {
 interface MapAutoOpenPopupProps {
   selectedId: string | number | null;
   branches: Branch[];
+}
+
+export interface BranchMarker extends L.Marker {
+  branchId: string | number;
+}
+
+export function isBranchMarker(layer: L.Layer): layer is BranchMarker {
+  return layer instanceof L.Marker && "branchId" in layer;
 }
 
 /* --------------------------- Main Component ---------------------------- */
@@ -173,7 +182,6 @@ export default function BranchMapView({
         <MapContainer
           ref={mapRef}
           center={initialCenter}
-          zoom={initialZoom}
           scrollWheelZoom={false}
           className="w-full h-full"
         >
@@ -185,6 +193,11 @@ export default function BranchMapView({
             <Marker
               key={b.id}
               position={[b.lat, b.lng]}
+              icon={L.icon({
+                iconUrl: "/marker-icon-2x.png", // ← your custom blue-dot icon
+                iconSize: [20, 20],
+                iconAnchor: [10, 10],
+              })}
               eventHandlers={{
                 click: () => setSelectedId(b.id),
               }}
@@ -206,6 +219,8 @@ export default function BranchMapView({
               </Popup>
             </Marker>
           ))}
+
+          <MyLocationAndRoute selectedId={selectedId} branches={branches} />
         </MapContainer>
       </div>
     </div>
@@ -222,28 +237,29 @@ export function MapAutoOpenPopup({
   useEffect(() => {
     if (!map || selectedId == null) return;
 
-    map.invalidateSize();
-
     const target = branches.find((b) => b.id === selectedId);
     if (!target) return;
 
-    let targetMarker: Marker | null = null;
-    console.log(targetMarker);
-    map.eachLayer((layer) => {
-      // SAFE TYPE NARROWING
-      if (layer instanceof L.Marker) {
-        const latlng = layer.getLatLng();
-        if (latlng.lat === target.lat && latlng.lng === target.lng) {
-          targetMarker = layer;
-        }
-      }
-    });
+    map.invalidateSize();
 
-    if (targetMarker) {
-      targetMarker.openPopup();
-    } else {
-      map.panTo([target.lat, target.lng]);
-    }
+    setTimeout(() => {
+      let targetMarker: BranchMarker | null = null;
+
+      map.eachLayer((layer) => {
+        if (isBranchMarker(layer)) {
+          if (layer.branchId === selectedId) {
+            targetMarker = layer;
+          }
+        }
+      });
+
+      // if (targetMarker) {
+      //   targetMarker.openPopup();
+      //   map.panTo(targetMarker.getLatLng());
+      // } else {
+      //   map.panTo([target.lat, target.lng]);
+      // }
+    }, 80);
   }, [selectedId, branches, map]);
 
   return null;

@@ -62,7 +62,7 @@ export default function Home() {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="flex flex-col lg:flex-row items-center justify-between px-10 md:px-20 mt-10 gap-10 relative">
+      <section className="flex flex-col lg:flex-row items-center justify-between px-10 min-h-screen md:px-20 mt-10 gap-10 relative">
         {/* Left Text */}
         <div className="flex-1">
           <div className="flex items-center gap-1 mb-2 text-yellow-500">
@@ -81,7 +81,7 @@ export default function Home() {
             Wardrobe
           </h1>
 
-          <div className="flex items-center gap-2 mt-6">
+          {/* <div className="flex items-center gap-2 mt-6">
             <Image
               src="/avatars.png" // replace with your images
               width={150}
@@ -89,7 +89,7 @@ export default function Home() {
               alt="users"
             />
             <span className="text-gray-700 text-lg">5k+</span>
-          </div>
+          </div> */}
         </div>
 
         {/* Center Shirt Image */}
